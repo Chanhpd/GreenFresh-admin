@@ -1,9 +1,9 @@
 // Cart
-function addToCart(id) {
+function addToCart(id,num) {
     $.post('api/cookie.php', {
         'action': 'add',
         'id': id,
-        'num': 1
+        'num': num
     }, function(data) {
         location.reload();
     })

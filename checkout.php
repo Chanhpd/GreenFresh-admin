@@ -113,15 +113,15 @@ require_once('api/check-form.php');
 								foreach ($cart as $val) {
 									if ($val['id'] == $item['id']) {
 										$num = $val['num'];
-										$total += $num * $item['price'];
+										$total += $num * $item['price'] * (1 - $item['sale'] * 0.01);
 										break;
 									}
 								}
 							}
 
-							$delivery = $total * .08;
+							$delivery = 3;
 							$discount = $total * 0.01;
-							$totalAll = $total - $delivery - $discount;
+							$totalAll = $total + $delivery - $discount;
 							?>
 							<p class="d-flex">
 								<span>Subtotal</span>

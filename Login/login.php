@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
                                     </h6>
                                     <form method="POST">
                                         <div class="form-outline mb-4">
-                                            <input type="text" id="form2Example11" name="account" class="form-control" placeholder="Email address" />
+                                            <input type="email" id="form2Example11" name="account" class="form-control" placeholder="Email address" />
                                             <!-- <label class="form-label" for="form2Example11">Username</label> -->
                                         </div>
 

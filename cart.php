@@ -59,7 +59,7 @@ if (count($idList) > 0) {
 								foreach ($cart as $val) {
 									if ($val['id'] == $item['id']) {
 										$num = $val['num'];
-										$total += $num * $item['price'];
+										$total += $num * $item['price'] * (1 - $item['sale'] * 0.01);
 										break;
 									}
 								}
@@ -69,7 +69,7 @@ if (count($idList) > 0) {
 							
 
 							<td class="image-prod">
-								<div class="img" style="background-image:url(' . $item['img'] . ');"></div>
+								<div class="img" style="background-image:url(' . $item['thumb'] . ');"></div>
 							</td>
 
 							<td class="product-name">
@@ -77,7 +77,7 @@ if (count($idList) > 0) {
 								
 							</td>
 
-							<td class="price">$' . number_format($item['price'], '2', '.', '.')  . '</td>
+							<td class="price">$' . number_format($item['price'] * (1 - $item['sale'] * 0.01), '2', '.', '.')  . '</td>
 
 							<td class="quantity">
 								
@@ -87,7 +87,7 @@ if (count($idList) > 0) {
 								
 							</td>
 
-							<td class="total">$' . number_format($item['price'] * $num, '2', '.', '.') . '</td>
+							<td class="total">$' . number_format(($item['price'] * (1 - $item['sale'] * 0.01)) * $num, '2', '.', '.') . '</td>
 						</tr>';
 							}
 							?>
@@ -112,32 +112,11 @@ if (count($idList) > 0) {
 				</div>
 				<p><a href="checkout.php" class="btn btn-primary py-3 px-4">Apply Coupon</a></p>
 			</div>
-			<!-- <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-				<div class="cart-total mb-3">
-					<h3>Estimate shipping and tax</h3>
-					<p>Enter your destination to get a shipping estimate</p>
-					<form action="#" class="info">
-						<div class="form-group">
-							<label for="">Country</label>
-							<input type="text" class="form-control text-left px-3" placeholder="">
-						</div>
-						<div class="form-group">
-							<label for="country">State/Province</label>
-							<input type="text" class="form-control text-left px-3" placeholder="">
-						</div>
-						<div class="form-group">
-							<label for="country">Zip/Postal Code</label>
-							<input type="text" class="form-control text-left px-3" placeholder="">
-						</div>
-					</form>
-				</div>
-				<p><a href="checkout.php" class="btn btn-primary py-3 px-4">Estimate</a></p>
-			</div> -->
 			<div class="col-lg-5 mt-5 cart-wrap ftco-animate">
 				<div class="cart-total mb-3">
 					<h3>Cart Totals</h3>
 					<?php
-					$delivery = $total * .08;
+					$delivery = 3;
 					$discount = $total * 0.01;
 					$totalAll = $total + $delivery - $discount;
 					?>

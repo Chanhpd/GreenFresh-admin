@@ -11,7 +11,7 @@ $name = $_SESSION['user'];
 $sql = "select * from user where name='$name'";
 $user = executeResult($sql, true);
 
-$_SESSION['img'] = $user['avatar'];
+$_SESSION['img'] = $user['avt'];
 
 //update information
 if (isset($_POST['sub-pro'])) {
@@ -47,21 +47,14 @@ if (isset($_POST['srcImg'])) {
     var_dump($img);
     $data = (new UploadApi())->upload($img);
     $url = $data['secure_url'];
-    $sql = "update user set avatar = '$url' where email ='" . $user['email'] . "'";
+    $sql = "update user set avt = '$url' where email ='" . $user['email'] . "'";
     var_dump($sql);
     execute($sql);
-    $_SESSION['img']= $url;
+    $_SESSION['img'] = $url;
 }
 ?>
 
 <div class="container-xl px-4 mt-4">
-    <!-- Account page navigation-->
-    <nav class="nav nav-borders">
-        <a class="nav-link active ms-0" href="https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details" target="__blank">Profile</a>
-        <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-billing-page" target="__blank">Billing</a>
-        <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-security-page" target="__blank">Security</a>
-        <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-edit-notifications-page" target="__blank">Notifications</a>
-    </nav>
     <hr class="mt-0 mb-4">
     <div class="row">
         <div class="col-xl-4">
@@ -70,15 +63,15 @@ if (isset($_POST['srcImg'])) {
                 <div class="card-header">Profile Picture</div>
                 <div class="card-body text-center">
                     <!-- Profile picture image-->
-                    <img class="img-account-profile rounded-circle mb-2" id="contain-img" src="<?= $user['avatar'] ?>" alt="">
+                    <img class="img-account-profile rounded-circle mb-2" id="contain-img" src="<?= $user['avt'] ?>" alt="">
 
                     <!-- Profile picture help block-->
                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                     <!-- Profile picture upload button-->
                     <form id="form-save-img">
                         <div>
-                        <label for="upload-btn" class="btn btn-primary"><i class="fa fa-upload"></i>Upload Image</label>
-                        <input class="btn btn-primary file" id="upload-btn" name="input-file" type="file" onchange="readURL(this);"></input>
+                            <label for="upload-btn" class="btn btn-primary"><i class="fa fa-upload"></i>Upload Image</label>
+                            <input class="btn btn-primary file" id="upload-btn" name="input-file" type="file" onchange="readURL(this);"></input>
                         </div>
 
                         <input type="submit" name="save-img" class="btn btn-primary" value="Save">
@@ -127,8 +120,10 @@ if (isset($_POST['srcImg'])) {
             </div>
         </div>
     </div>
-    <hr>
-    <div class="col-lg-8">
+    
+    <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-8">
         <!-- Change password card-->
         <div class="card mb-4">
             <div class="card-header">Change Password</div>
@@ -154,6 +149,9 @@ if (isset($_POST['srcImg'])) {
             </div>
         </div>
     </div>
+    </div>
+    <hr>
+    
 </div>
 
 
@@ -208,7 +206,7 @@ include_once('./inc/footer.php')
                 },
 
                 success: function(response) {
-                     alert("Change success");
+                    alert("Change success");
                 }
             })
         })

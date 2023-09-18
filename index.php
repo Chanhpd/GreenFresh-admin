@@ -21,7 +21,7 @@
  			</div>
  		</div>
 
- 		<div class="slider-item" style="background-image: url(images/bg7.jpg);">
+ 		<div class="slider-item" style="background-image: url('https://wallpapers.com/images/hd/meat-3000-x-2307-background-rwbvqm2fjkilplyd.jpg');">
  			<div class="overlay"></div>
  			<div class="container">
  				<div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
@@ -97,21 +97,21 @@
  					<div class="col-md-6 order-md-last align-items-stretch d-flex">
  						<div class="category-wrap-2 ftco-animate img align-self-stretch d-flex" style="background-image: url(images/category.jpg);">
  							<div class="text text-center">
- 								<h2>Vegetables</h2>
+ 								<h2>Green fresh</h2>
  								<p>Protect the health of every home</p>
  								<p><a href="shop.php" class="btn btn-primary">Shop now</a></p>
  							</div>
  						</div>
  					</div>
  					<div class="col-md-6">
- 						<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(images/category-1.jpg);">
+ 						<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url('https://www.starfrit.com/media/amasty/webp/contentmanager/content/top-10-vegetable-tools_1_jpg.webp');">
  							<div class="text px-3 py-1">
  								<h2 class="mb-0"><a href="shop.php?category=1">Vegetables</a></h2>
  							</div>
  						</div>
- 						<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url(images/category-2.jpg);">
+ 						<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url('https://www.beefcentral.com/wp-content/uploads/2022/02/MeatiStock-1310910433-e1645596653685.jpg');">
  							<div class="text px-3 py-1">
- 								<h2 class="mb-0"><a href="shop.php?category=2">Fruits</a></h2>
+ 								<h2 class="mb-0"><a href="shop.php?category=2">Meats</a></h2>
  							</div>
  						</div>
  					</div>
@@ -119,14 +119,14 @@
  			</div>
 
  			<div class="col-md-4">
- 				<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(images/category-3.jpg);">
+ 				<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf0omyPx8EKBzstCJKuL3gph__6qephfiiIQ&usqp=CAU');">
  					<div class="text px-3 py-1">
- 						<h2 class="mb-0"><a href="shop.php?category=3">Juices</a></h2>
+ 						<h2 class="mb-0"><a href="shop.php?category=3">Protein foods</a></h2>
  					</div>
  				</div>
- 				<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url(images/category-4.jpg);">
+ 				<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url('https://i2-vnexpress.vnecdn.net/2015/07/11/fruit-image-4717-1436585539.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=LNT284FboSe4wyC1yAaVjw');">
  					<div class="text px-3 py-1">
- 						<h2 class="mb-0"><a href="shop.php?category=4">Dried</a></h2>
+ 						<h2 class="mb-0"><a href="shop.php?category=4">Fruit</a></h2>
  					</div>
  				</div>
  			</div>
@@ -139,7 +139,7 @@
  		<div class="row justify-content-center mb-3 pb-3">
  			<div class="col-md-12 heading-section text-center ftco-animate">
  				<span class="subheading">Featured Products</span>
- 				<h2 class="mb-4">Our Products</h2>
+ 				<h2 class="mb-4">Best seller</h2>
  				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
  			</div>
  		</div>
@@ -148,12 +148,12 @@
  		<div class="row">
  			<?php
 
-				$sql = "SELECT * FROM product ORDER BY RAND ( ) limit 8";
+				$sql = "SELECT * FROM product ORDER BY sale DESC, RAND() LIMIT 8";
 				$result = executeResult($sql);
 				$i = 0;
 				foreach($result as $row){
 					++$i;
-					if ($row['sale'] !== null) { ?>
+					if ($row['sale'] != "0") { ?>
  					<div class="col-md-6 col-lg-3 ftco-animate">
  						<div class="product">
  							<a href="product-single.php?id=<?= $row['id'] ?>" class="img-prod"><img class="img-fluid" src="<?= $row['thumb'] ?>" alt="Colorlib Template">
@@ -164,7 +164,7 @@
  								<h3><a href="#"><?= $row['name'] ?></a></h3>
  								<div class="d-flex">
  									<div class="pricing">
- 										<p class="price"><span class="mr-2 price-dc">$ <?= number_format($row['price'], '2', '.', '.') ?></span><span class="price-sale">$<?= number_format($row['price']*(100-$row['sale'])*0.01, '2', '.', '.') ?></span></p>
+ 										<p class="price"><span class="mr-2 price-dc">$ <?= number_format($row['price'], '2', '.', '.') ?></span><span class="price-sale">$<?= number_format($row['price']*(100-$row['sale'])*0.01, '2', '.', '.') ?> /<?=$row['unit']?></span></p>
  									</div>
  								</div>
  							<?php ;
@@ -172,7 +172,7 @@
 								?>
  								<div class="col-md-6 col-lg-3 ftco-animate">
  									<div class="product">
- 										<a href="product-single.php?id=<?= $row['id'] ?>" class="img-prod"><img class="img-fluid" src="<?= $row['img'] ?>" alt="Colorlib Template">
+ 										<a href="product-single.php?id=<?= $row['id'] ?>" class="img-prod"><img class="img-fluid" src="<?= $row['thumb'] ?>" alt="Colorlib Template">
  											<div class="overlay"></div>
  										</a>
  										<div class="text py-3 pb-4 px-3 text-center">
@@ -189,7 +189,7 @@
 											 <a  class="add-to-cart d-flex justify-content-center align-items-center text-center">
  													<span><i class="ion-ios-menu"></i></span>
  												</a>
- 												<button onclick="addToCart(<?=$row['id']?>)"  id="add_to_cart" class="btn btn-success buy-now d-flex justify-content-center align-items-center mx-1">
+ 												<button onclick="addToCart(<?=$row['id']?>,1)"  id="add_to_cart" class="btn btn-success buy-now d-flex justify-content-center align-items-center mx-1">
  													<span><i class="ion-ios-cart"></i></span>
  												</button>
  												

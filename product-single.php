@@ -36,13 +36,17 @@ if (isset($_COOKIE['cart'])) {
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-6 mb-5 ftco-animate">
-				<a href="<?= $product['img'] ?>" class="image-popup"><img src="<?= $product['img'] ?>" class="img-fluid" alt="Colorlib Template"></a>
+				<a href="<?= $product['thumb'] ?>" class="image-popup"><img src="<?= $product['thumb'] ?> " class="img-fluid" alt="Colorlib Template">
+
+
+				</a>
+
 			</div>
 			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
 				<h3><?= $product['name'] ?></h3>
 				<div class="rating d-flex">
 					<p class="text-left mr-4">
-						<a href="#" class="mr-2">5.0</a>
+						<a href="#" class="mr-2"><?= $product['star'] ?></a>
 						<a href="#"><span class="ion-ios-star-outline"></span></a>
 						<a href="#"><span class="ion-ios-star-outline"></span></a>
 						<a href="#"><span class="ion-ios-star-outline"></span></a>
@@ -50,35 +54,25 @@ if (isset($_COOKIE['cart'])) {
 						<a href="#"><span class="ion-ios-star-outline"></span></a>
 					</p>
 					<p class="text-left mr-4">
-						<a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
+						<a href="#" class="mr-2" style="color: #000;"><img width="24" height="24" src="https://img.icons8.com/emoji/48/fire.png" alt="fire" /> <span style="color: #000;"><?= $product['calories'] ?> calo</span></a>
 					</p>
-					<p class="text-left">
+					<!-- <p class="text-left">
 						<a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
-					</p>
+					</p> -->
 				</div>
 				<!-- <p class="price"><span>$<?= number_format($product['price'], '2', '.', '.') ?></span></p> -->
-				<?php if ($product['sale'] >0) {
-					echo '<p class="price"><span class="mr-2 price-dc">$'. number_format($product['price'], '2', '.', '.') .'</span>
-					<span class="price-sale">$'. number_format($product['price']*(100-$product['sale'])*0.01, '2', '.', '.') .'</span></p>';
-					
+				<?php if ($product['sale'] > 0) {
+					echo '<p class="price"><span class="mr-2 price-dc">$' . number_format($product['price'], '2', '.', '.') . '</span>
+					<span class="price-sale">$' . number_format($product['price'] * (100 - $product['sale']) * 0.01, '2', '.', '.') . '</span></p>';
 				} else {
 					echo '<p class="price"><span>$' . number_format($product['price'], '2', '.', '.') . '</span></p>';
 				}
 				?>
-				<p><?= $product['des'] ?>
+				<p><?= $product['description'] ?>
 				</p>
 				<div class="row mt-4">
 					<div class="col-md-6">
 						<div class="form-group d-flex">
-							<div class="select-wrap">
-								<div class="icon"><span class="ion-ios-arrow-down"></span></div>
-								<select name="" id="" class="form-control">
-									<option value="">Small</option>
-									<option value="">Medium</option>
-									<option value="">Large</option>
-									<option value="">Extra Large</option>
-								</select>
-							</div>
 						</div>
 					</div>
 					<div class="w-100"></div>
@@ -97,11 +91,11 @@ if (isset($_COOKIE['cart'])) {
 					</div>
 					<div class="w-100"></div>
 					<div class="col-md-12">
-						<p style="color: #000;">600 kg available</p>
+						<p style="color: #000;">Unit : <?= $product['unit'] ?></p>
 					</div>
 				</div>
 				<p>
-					<a class="btn btn-black py-3 px-5" onclick="addToCart(<?= $id ?>)">Add to Cart</a>
+					<a class="btn btn-black py-3 px-5" onclick="addToCart(<?= $id ?>,document.getElementById('quantity').value)">Add to Cart</a>
 					<!-- <button class="btn btn-dark py-3 px-5" onclick="addToCart(<?= $id ?>)">Add to Cart</button> -->
 				</p>
 			</div>
@@ -122,19 +116,19 @@ if (isset($_COOKIE['cart'])) {
 	<div class="container">
 		<div class="row">
 			<?php
-
-			$sql = "SELECT * FROM product ORDER BY RAND ( ) limit 4";
+			$id_cate = $product['id_cate'];
+			$sql = "SELECT * FROM product WHERE id_cate= '$id_cate' ORDER BY RAND ( ) limit 4";
 			$result = executeResult($sql);
 
 			foreach ($result as $row) {
 
-				if ($row['sale'] >0) {
+				if ($row['sale'] > 0) {
 					echo '<div class="col-md-6 col-lg-3 ftco-animate">
-	<div class="product">
-		<a href="product-single.php?id=' . $row['id'] . '" class="img-prod"><img class="img-fluid" src="' . $row['img'] . '" alt="Colorlib Template">
-			<span class="status">' . $row['sale'] . '%</span>
-			<div class="overlay"></div>
-		</a>
+		<div class="product">
+			<a href="product-single.php?id=' . $row['id'] . '" class="img-prod"><img class="img-fluid" src="' . $row['thumb'] . '" alt="Colorlib Template">
+				<span class="status">' . $row['sale'] . '%</span>
+				<div class="overlay"></div>
+			</a>
 		<div class="text py-3 pb-4 px-3 text-center">
 			<h3><a href="#">' . $row['name'] . '</a></h3>
 			<div class="d-flex">
@@ -146,7 +140,7 @@ if (isset($_COOKIE['cart'])) {
 				} else {
 					echo '<div class="col-md-6 col-lg-3 ftco-animate">
 		<div class="product">
-			<a href="product-single.php?id=' . $row['id'] . '" class="img-prod"><img class="img-fluid" src="' . $row['img'] . '" alt="Colorlib Template">
+			<a href="product-single.php?id=' . $row['id'] . '" class="img-prod"><img class="img-fluid" src="' . $row['thumb'] . '" alt="Colorlib Template">
 				<div class="overlay"></div>
 			</a>
 			<div class="text py-3 pb-4 px-3 text-center">
@@ -212,45 +206,44 @@ include_once('./inc/footer.php');
 <script src="js/main.js"></script>
 
 <script>
-
-		var quantity = 0;
-		$('.quantity-right-plus').click(function(e) {
-			// Stop acting like a button
-			e.preventDefault();
-			// Get the field name
-			 quantity = parseInt($('#quantity').val());
-			 // If is not undefined
-			 $('#quantity').val(quantity + 1);
-			// Increment
-		});
-
-		$('.quantity-left-minus').click(function(e) {
-			// Stop acting like a button
-			e.preventDefault();
-			// Get the field name
-			 quantity = parseInt($('#quantity').val());
-			// If is not undefined
-			// Increment
-			if (quantity > 0) {
-				$('#quantity').val(quantity - 1);
-			}
-		});
-
-	function addToCart(id) {
-
+	var quantity = 0;
+	$('.quantity-right-plus').click(function(e) {
+		// Stop acting like a button
+		e.preventDefault();
+		// Get the field name
 		quantity = parseInt($('#quantity').val());
+		// If is not undefined
+		$('#quantity').val(quantity + 1);
+		// Increment
+	});
 
-    // $.post('api/cookie.php', {
-    //     'action': 'add',
-    //     'id': id,
-    //     'num': quantity
-    // }, function(data) {
-    //     location.reload();
-    // })
-}
+	$('.quantity-left-minus').click(function(e) {
+		// Stop acting like a button
+		e.preventDefault();
+		// Get the field name
+		quantity = parseInt($('#quantity').val());
+		// If is not undefined
+		// Increment
+		if (quantity > 0) {
+			$('#quantity').val(quantity - 1);
+		}
+	});
+
+	// function addToCart(id) {
+
+	// 	quantity = parseInt($('#quantity').val());
+
+	// 	// $.post('api/cookie.php', {
+	// 	//     'action': 'add',
+	// 	//     'id': id,
+	// 	//     'num': quantity
+	// 	// }, function(data) {
+	// 	//     location.reload();
+	// 	// })
+	// }
 </script>
 
-<!-- <script src="js/action-cookie.js"></script> -->
+<script src="js/action-cookie.js"></script>
 </body>
 
 </html>

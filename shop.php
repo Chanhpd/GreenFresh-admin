@@ -31,7 +31,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 	<div class="container">
 
 		<div class="row justify-content-center">
-			
+
 			<div class="col-md-10 mb-5 text-center">
 				<ul class="product-category">
 					<!-- <li><a href="shop.php" class="active">All</a></li>
@@ -42,10 +42,10 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 					<li><a class="<?= ($activePage == '') ? 'active' : ''; ?>" href="shop.php">All</a></li>
 					<li><a class="<?= strlen(strstr($activePage, 'category=1')) > 0 ? 'active' : ''; ?>" href="?category=1">Vegetables</a></li>
-					<li><a class="<?= strlen(strstr($activePage, 'category=2')) > 0 ? 'active' : ''; ?>" href="?category=2">Fruits</a></li>
-					<li><a class="<?= strlen(strstr($activePage, 'category=3')) > 0 ? 'active' : ''; ?>" href="?category=3">Juice</a></li>
-					<li><a class="<?= strlen(strstr($activePage, 'category=4')) > 0 ? 'active' : ''; ?>" href="?category=4">Dried</a></li>
-					
+					<li><a class="<?= strlen(strstr($activePage, 'category=2')) > 0 ? 'active' : ''; ?>" href="?category=2">Meat</a></li>
+					<li><a class="<?= strlen(strstr($activePage, 'category=3')) > 0 ? 'active' : ''; ?>" href="?category=3">Protein food</a></li>
+					<li><a class="<?= strlen(strstr($activePage, 'category=4')) > 0 ? 'active' : ''; ?>" href="?category=4">Fruit</a></li>
+					<li><a class="<?= strlen(strstr($activePage, 'category=5')) > 0 ? 'active' : ''; ?>" href="?category=5">Juice</a></li>
 				</ul>
 			</div>
 
@@ -72,7 +72,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 			} elseif ($category == '') {
 				$sql = 'SELECT count(id) as number FROM product ';
 			} else {
-				$sql = "SELECT  count(id) as number FROM product where id_cate='$category'";
+				$sql = "SELECT count(id) as number FROM product where id_cate='$category'";
 			}
 
 			$result = executeResult($sql);
@@ -102,10 +102,10 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 			foreach ($result as $row) {
 
-				if ($row['sale'] !== null && $row['sale'] != "0" ) {
+				if ($row['sale'] !== null && $row['sale'] != "0") {
 					echo '<div class="col-md-6 col-lg-3 ftco-animate">
 				<div class="product">
-					<a href="product-single.php?id=' . $row['id'] . '" class="img-prod"><img class="img-fluid" src="' . $row['img'] . '" alt="Colorlib Template">
+					<a href="product-single.php?id=' . $row['id'] . '" class="img-prod"><img class="img-fluid" src="' . $row['thumb'] . '" alt="Colorlib Template">
 						<span class="status">' . $row['sale'] . '%</span>
 						<div class="overlay"></div>
 					</a>
@@ -113,21 +113,21 @@ if (isset($_SERVER['QUERY_STRING'])) {
 						<h3><a href="#">' . $row['name'] . '</a></h3>
 						<div class="d-flex">
 							<div class="pricing">
-								<p class="price"><span class="mr-2 price-dc">$' . number_format($row['price'], '2', '.', '.') . '</span><span class="price-sale">' . number_format($row['price'] * (100 - $row['sale']) * 0.01, '2', '.', '.') . '$</span></p>
+								<p class="price"><span class="mr-2 price-dc">$' . number_format($row['price'], '2', '.', '.') . '</span><span class="price-sale">$' . number_format($row['price'] * (100 - $row['sale']) * 0.01, '2', '.', '.') . ' /'.$row['unit'].'</span></p>
 							</div>
 						</div>
 						';
 				} else {
 					echo '<div class="col-md-6 col-lg-3 ftco-animate">
 					<div class="product">
-						<a href="product-single.php?id=' . $row['id'] . '" class="img-prod"><img class="img-fluid" src="' . $row['img'] . '" alt="Colorlib Template">
+						<a href="product-single.php?id=' . $row['id'] . '" class="img-prod"><img class="img-fluid" src="' . $row['thumb'] . '" alt="Colorlib Template">
 							<div class="overlay"></div>
 						</a>
 						<div class="text py-3 pb-4 px-3 text-center">
 							<h3><a href="#">' . $row['name'] . '</a></h3>
 							<div class="d-flex">
 								<div class="pricing">
-									<p class="price"><span>$' . number_format($row['price'], '2', '.', '.') . '</span></p>
+									<p class="price"><span>$' . number_format($row['price'], '2', '.', '.') . '/ '.$row['unit'].'</span></p>
 								</div>
 							</div>
 							';
@@ -137,7 +137,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 									<a  href="" class="add-to-cart d-flex justify-content-center align-items-center text-center">
 										<span><i class="ion-ios-menu"></i></span>
 									</a>
-									<button onclick=addToCart(' . $row['id'] . ') class="btn btn-success buy-now d-flex justify-content-center align-items-center mx-1">
+									<button onclick=addToCart(' . $row['id'] . ',1) class="btn btn-success buy-now d-flex justify-content-center align-items-center mx-1">
 										<span><i class="ion-ios-cart"></i></span>
 									</button>
 									<button onclick=addToWishList(' . $row['id'] . ') class="btn btn-success heart d-flex justify-content-center align-items-center ">
